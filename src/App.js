@@ -1,8 +1,8 @@
 import {
   BrowserRouter, Routes, Route, Outlet,
 } from 'react-router-dom';
-import Home from '../src/components/Home'
-import Categories from '../src/components/Categories'
+import Home from './components/Home';
+import Categories from './components/Categories';
 
 function Layout() {
   return (
