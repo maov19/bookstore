@@ -93,9 +93,9 @@ To run tests:
 ## 👥 Authors <a name="authors"></a>
 
 👤 **Martin Ossa**
-- GitHub: [@maov19]
-
-👤 **Muhammad Muttraf**
+- GitHub: [maov19](https://github.com/maov19)
+- Linkedin: [Martin Ossa](https://linkedin.com/in/martin-ossa)
+ 
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
