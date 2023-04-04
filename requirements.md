@@ -1,13 +1,11 @@
-Project requirements
-DONE - Setup a new React application using Create React App
-DONE - Create a directory for your reusable components: 
-DONE - /components.
-DONE - Install React Router
-DONE - Setup your router inside of <App>
-DONE - Add 2 routes in your application:
-DONE - /, which contains
-DONE - A book list, where each book has a title and author
-DONE - A form that allows for creating a new book
-DONE - /categories
-DONE - This should display a button that checks for a status
-DONE - Include a navigation component that includes links to the 2 routes you created
+DONE - Add Redux Toolkit (npm install react-redux @reduxjs/toolkit).
+DONE - Create a directory that will contain all your Redux logic (/src/redux)
+DONE - Configure a Redux store (/src/redux/store.js)
+Define a slice of state for books that:
+    Includes an array of books (initial state: empty array)
+    Includes a reducer that adds a book
+    Includes a reducer that removes a book
+Define a slice of state for categories that:
+    Includes an array of categories (initial state: empty array)
+    Includes a reducer that checks the status and always returns "Under construction" (the initial state should check to that string)
+DONE - Structure your application files using a "feature folder" approach and use the ducks pattern for your Redux files. 
