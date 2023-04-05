@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { addBook } from './booksSlice';
+import { addBook } from '../redux/books/booksSlice';
 
 function AddBookButton() {
   const dispatch = useDispatch();
@@ -15,5 +15,7 @@ function AddBookButton() {
     dispatch(addBook(newBook));
   };
 
-  return <button onClick={addBookHandler}>Add Book</button>;
+  return <button type="button" onClick={addBookHandler}>Add Book</button>;
 }
+
+export default AddBookButton;
