@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+// import { useSelector } from 'react-redux';
+import BookList from './Books';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -26,21 +28,12 @@ const Home = () => {
   return (
     <div>
       <h1>Home</h1>
-      <ul id="book-list">
-        {books.map((book, item) => (/* eslint-disable */
-          <li key={item}>
-            {book.bookName}
-            {' '}
-            by
-            {book.authorName}
-          </li>
-        ))}
-      </ul>
+      <BookList />
       <form id="create-book" onSubmit={addBook}>
         <input className="book-name" name="bookName" placeholder="Insert book here" />
         <input className="author-name" name="authorName" placeholder="Insert author here" />
         <span />
-        <button type="submit">Add new book</button>
+        {/* <button type="submit">Add new book</button> */}
       </form>
     </div>
   );
