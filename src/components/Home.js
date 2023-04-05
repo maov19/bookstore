@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-// import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
 import BookList from './Books';
+import { addBook } from '../redux/books/booksSlice';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -16,12 +18,14 @@ const Home = () => {
     localStorage.setItem('books', JSON.stringify(books));
   }, [books]);
 
-  const addBook = (e) => {
+  const dispatch = useDispatch();
+
+  const addBookHandler = (e) => {
     e.preventDefault();
-    const bookName = e.target.bookName.value;
-    const authorName = e.target.authorName.value;
-    const newBook = { bookName, authorName };
-    setBooks([...books, newBook]);
+    const title = e.target.bookName.value;
+    const author = e.target.authorName.value;
+    const newBook = { title, author };
+    dispatch(addBook(newBook));
     e.target.reset();
   };
 
@@ -29,11 +33,10 @@ const Home = () => {
     <div>
       <h1>Home</h1>
       <BookList />
-      <form id="create-book" onSubmit={addBook}>
+      <form id="create-book" onSubmit={addBookHandler}>
         <input className="book-name" name="bookName" placeholder="Insert book here" />
         <input className="author-name" name="authorName" placeholder="Insert author here" />
-        <span />
-        {/* <button type="submit">Add new book</button> */}
+        <button type="submit">Add new book</button>
       </form>
     </div>
   );
