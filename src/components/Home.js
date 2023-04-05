@@ -1,45 +1,55 @@
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import BookList from './Books';
+import { addBook, removeBook } from '../redux/books/booksSlice';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
 
-  useEffect(() => {
-    const storedBooks = JSON.parse(localStorage.getItem('books'));
-    if (storedBooks) {
-      setBooks(storedBooks);
-    }
-  }, []);
+  const bookList = useSelector((state) => state.books);
 
   useEffect(() => {
-    localStorage.setItem('books', JSON.stringify(books));
-  }, [books]);
+    setBooks(bookList);
+    localStorage.setItem('books', JSON.stringify(bookList));
+  }, [bookList]);
 
-  const addBook = (e) => {
+  const dispatch = useDispatch();
+
+  const addBookButton = (e) => {
     e.preventDefault();
-    const bookName = e.target.bookName.value;
-    const authorName = e.target.authorName.value;
-    const newBook = { bookName, authorName };
-    setBooks([...books, newBook]);
+    const title = e.target.bookName.value;
+    const author = e.target.authorName.value;
+    const newBook = { title, author, id: Math.random().toString(36).substr(2, 9) };
+    dispatch(addBook(newBook));
     e.target.reset();
   };
+/* eslint-disable */
+  function RemoveBookButton({ bookId }) {
+    const dispatch = useDispatch();
+
+    const removeBookHandler = () => {
+      dispatch(removeBook(bookId));
+    };
+
+    return <button type="button" onClick={removeBookHandler}>Remove Book</button>;
+  }
 
   return (
     <div>
       <h1>Home</h1>
-      <ul id="book-list">
-        {books.map((book, item) => (/* eslint-disable */
-          <li key={item}>
-            {book.bookName}
-            {' '}
-            by
-            {book.authorName}
-          </li>
+      <BookList>
+        {books.map((book) => (
+          <div key={book.id}>
+            <p>{book.title}</p>
+            <p>{book.author}</p>
+            <RemoveBookButton bookId={book.id} />
+          </div>
         ))}
-      </ul>
-      <form id="create-book" onSubmit={addBook}>
+      </BookList>
+      <form id="create-book" onSubmit={addBookButton}>
         <input className="book-name" name="bookName" placeholder="Insert book here" />
         <input className="author-name" name="authorName" placeholder="Insert author here" />
-        <span />
         <button type="submit">Add new book</button>
       </form>
     </div>
