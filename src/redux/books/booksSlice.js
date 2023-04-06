@@ -15,16 +15,18 @@ export const fetchBooks = createAsyncThunk('books/fetchBooks', async () => {
   return data;
 });
 
-
 export const createBook = createAsyncThunk('books/createBook', async (bookData) => {
   const response = await axios.post(
     'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/HGGa9fmUyjETuK6YcEa3/books',
-    bookData,
+    {
+      item_id: bookData.id,
+      ...bookData
+    },
     {
       headers: { 'Content-Type': 'application/json' },
     },
   );
-  return response.data;
+  return { ...bookData, id: response.data.item_id };
 });
 
 const booksSlice = createSlice({
