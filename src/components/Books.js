@@ -1,8 +1,8 @@
-import { useSelector, useDispatch } from 'react-redux';
-
-import { removeBook } from '../redux/books/booksSlice';
-
 /* eslint-disable */
+import { v4 as uuidv4 } from 'uuid';
+import { useSelector, useDispatch } from 'react-redux';
+import { addBook, removeBook } from '../redux/books/booksSlice';
+
 function Book({ book }) {
   return (
     <div>
@@ -12,20 +12,44 @@ function Book({ book }) {
         by
         {' '}
         {book.author}
-        <RemoveBookButton bookId={book.item_id} />
+        <RemoveBook bookId={book.item_id} />
       </li>
     </div>
   );
 }
 
-function RemoveBookButton({ bookId }) {
+function NewBook() {
+  const dispatch = useDispatch();
+
+  const addBookButton = (e) => {
+    e.preventDefault();
+    const title = e.target.bookName.value;
+    const author = e.target.authorName.value;
+    // const newBook = { title, author, id: uuidv4() };
+    const newBook = { title, author, item_id: uuidv4() };
+    dispatch(addBook(newBook));
+    e.target.reset();
+  };
+
+  return (
+    <div>
+      <form id="create-book" onSubmit={addBookButton}>
+        <input className="book-name" name="bookName" placeholder="Insert book here" />
+        <input className="author-name" name="authorName" placeholder="Insert author here" />
+        <button type="submit">Add new book</button>
+      </form>
+    </div>
+  );
+}
+
+function RemoveBook({ bookId }) {
   const dispatch = useDispatch();
 
   const removeBookHandler = () => {
     dispatch(removeBook(bookId));
   };
 
-  return <button onClick={removeBookHandler}>Remove Book</button>;
+  return <button type="button" onClick={removeBookHandler}>Remove Book</button>;
 }
 
 function BookList() {
@@ -43,4 +67,4 @@ function BookList() {
   );
 }
 
-export default BookList;
+export {BookList, NewBook, RemoveBook};
