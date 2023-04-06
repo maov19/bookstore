@@ -1,8 +1,8 @@
-/* eslint-disable */
-
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createBook, deleteBook, fetchBooks, selectBooks } from '../redux/books/booksSlice';
+import {
+  createBook, deleteBook, fetchBooks, selectBooks,
+} from '../redux/books/booksSlice';
 
 function DisplayBooks() {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ function CreateBook() {
     setAuthor('');
     setCategory('');
   };
-
+/* eslint-disable */
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -94,6 +94,4 @@ function DeleteBook({ itemId }) {
   return <button onClick={handleDeleteBook}>Delete Book</button>;
 }
 
-
 export { CreateBook, DeleteBook, DisplayBooks };
-

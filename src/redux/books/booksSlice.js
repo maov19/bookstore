@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -20,7 +18,7 @@ export const createBook = createAsyncThunk('books/createBook', async (bookData) 
     'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/HGGa9fmUyjETuK6YcEa3/books',
     {
       item_id: bookData.id,
-      ...bookData
+      ...bookData,
     },
     {
       headers: { 'Content-Type': 'application/json' },
@@ -29,6 +27,7 @@ export const createBook = createAsyncThunk('books/createBook', async (bookData) 
   return { ...bookData, id: response.data.item_id };
 });
 
+/* eslint-disable */
 export const deleteBook = createAsyncThunk(
   'books/deleteBook',
   async (bookId) => {
@@ -38,16 +37,14 @@ export const deleteBook = createAsyncThunk(
         {
           headers: { 'Content-Type': 'application/json' },
           data: JSON.stringify({ item_id: bookId }),
-        }
+        },
       );
       return bookId;
     } catch (error) {
       throw new Error(`Failed to delete book: ${error.message}`);
     }
-  }
+  },
 );
-
-
 
 const booksSlice = createSlice({
   name: 'books',
