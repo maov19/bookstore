@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  createBook, deleteBook, fetchBooks, selectBooks,
+  createBook,
+  deleteBook,
+  fetchBooks,
+  selectBooks,
 } from '../redux/books/booksSlice';
 
 function DisplayBooks() {
@@ -49,36 +53,31 @@ function CreateBook() {
     setAuthor('');
     setCategory('');
   };
-/* eslint-disable */
+
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="title">Title:</label>
-        <input
-          type="text"
-          id="title"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-        />
+        <label htmlFor="title">
+          Title:
+          <input
+            id="title"
+            type="text"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
+        </label>
       </div>
       <div>
-        <label htmlFor="author">Author:</label>
-        <input
-          type="text"
-          id="author"
-          value={author}
-          onChange={(event) => setAuthor(event.target.value)}
-        />
+        <label htmlFor="author">
+          Author:
+          <input
+            type="text"
+            id="author"
+            value={author}
+            onChange={(event) => setAuthor(event.target.value)}
+          />
+        </label>
       </div>
-      {/* <div>
-        <label htmlFor="category">Category:</label>
-        <input
-          type="text"
-          id="category"
-          value={category}
-          onChange={(event) => setCategory(event.target.value)}
-        />
-      </div> */}
       <button type="submit">Create Book</button>
     </form>
   );
@@ -91,7 +90,15 @@ function DeleteBook({ itemId }) {
     dispatch(deleteBook(itemId));
   };
 
-  return <button onClick={handleDeleteBook}>Delete Book</button>;
+  return (
+    <button onClick={handleDeleteBook} type="button">
+      Delete Book
+    </button>
+  );
 }
+
+DeleteBook.propTypes = {
+  itemId: PropTypes.string.isRequired,
+};
 
 export { CreateBook, DeleteBook, DisplayBooks };
