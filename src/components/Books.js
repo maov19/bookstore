@@ -1,70 +1,100 @@
 /* eslint-disable */
-import { v4 as uuidv4 } from 'uuid';
-import { useSelector, useDispatch } from 'react-redux';
-import { addBook, removeBook } from '../redux/books/booksSlice';
 
-function Book({ book }) {
+/* eslint-disable */
+
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createBook, deleteBook, fetchBooks, selectBooks } from '../redux/books/booksSlice';
+
+function DisplayBooks() {
+  const dispatch = useDispatch();
+  const books = useSelector(selectBooks);
+
+  useEffect(() => {
+    dispatch(fetchBooks());
+  }, [dispatch]);
+
+  if (!Array.isArray(books)) {
+    return null; // or render a loading indicator
+  }
+
   return (
     <div>
-      <li>
-        {book.title}
-        {' '}
-        by
-        {' '}
-        {book.author}
-        <RemoveBook bookId={book.item_id} />
-      </li>
+      {books.map((book) => (
+        <div key={book.id}>
+          <h2>{book.title}</h2>
+          <p>{book.author}</p>
+          <p>{book.category}</p>
+          <DeleteBook itemId={book.id} />
+        </div>
+      ))}
     </div>
   );
 }
 
-function NewBook() {
+function CreateBook() {
   const dispatch = useDispatch();
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [category, setCategory] = useState('');
 
-  const addBookButton = (e) => {
-    e.preventDefault();
-    const title = e.target.bookName.value;
-    const author = e.target.authorName.value;
-    // const newBook = { title, author, id: uuidv4() };
-    const newBook = { title, author, item_id: uuidv4() };
-    dispatch(addBook(newBook));
-    e.target.reset();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const bookData = {
+      title,
+      author,
+      category,
+      id: Date.now().toString(), // add unique ID
+    };
+    dispatch(createBook(bookData));
+    setTitle('');
+    setAuthor('');
+    setCategory('');
   };
 
   return (
-    <div>
-      <form id="create-book" onSubmit={addBookButton}>
-        <input className="book-name" name="bookName" placeholder="Insert book here" />
-        <input className="author-name" name="authorName" placeholder="Insert author here" />
-        <button type="submit">Add new book</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="title">Title:</label>
+        <input
+          type="text"
+          id="title"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="author">Author:</label>
+        <input
+          type="text"
+          id="author"
+          value={author}
+          onChange={(event) => setAuthor(event.target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="category">Category:</label>
+        <input
+          type="text"
+          id="category"
+          value={category}
+          onChange={(event) => setCategory(event.target.value)}
+        />
+      </div>
+      <button type="submit">Create Book</button>
+    </form>
   );
 }
 
-function RemoveBook({ bookId }) {
+function DeleteBook({ itemId }) {
   const dispatch = useDispatch();
 
-  const removeBookHandler = () => {
-    dispatch(removeBook(bookId));
+  const handleDelete = () => {
+    dispatch(deleteBook({ itemId }));
   };
 
-  return <button type="button" onClick={removeBookHandler}>Remove Book</button>;
+  return <button onClick={handleDelete}>Delete Book</button>;
 }
 
-function BookList() {
-  const books = useSelector((state) => state.books);
+export { CreateBook, DeleteBook, DisplayBooks };
 
-  return (
-    <div>
-      <h1>Book List</h1>
-      <ul>
-        {books.map((book) => (
-          <Book key={book.item_id} book={book} />
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export {BookList, NewBook, RemoveBook};
