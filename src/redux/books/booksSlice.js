@@ -29,15 +29,30 @@ export const createBook = createAsyncThunk('books/createBook', async (bookData) 
   return { ...bookData, id: response.data.item_id };
 });
 
+export const deleteBook = createAsyncThunk(
+  'books/deleteBook',
+  async (bookId) => {
+    try {
+      const response = await axios.delete(
+        `https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/HGGa9fmUyjETuK6YcEa3/books/${bookId}`,
+        {
+          headers: { 'Content-Type': 'application/json' },
+          data: JSON.stringify({ item_id: bookId }),
+        }
+      );
+      return bookId;
+    } catch (error) {
+      throw new Error(`Failed to delete book: ${error.message}`);
+    }
+  }
+);
+
+
+
 const booksSlice = createSlice({
   name: 'books',
   initialState,
-  reducers: {
-    deleteBook(state, action) {
-      const bookId = action.payload.itemId;
-      state.books = state.books.filter((book) => book.id !== bookId);
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchBooks.pending, (state) => {
@@ -51,22 +66,16 @@ const booksSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      .addCase(createBook.pending, (state) => {
-        state.status = 'loading';
-      })
       .addCase(createBook.fulfilled, (state, action) => {
-        state.status = 'succeeded';
         state.books.push(action.payload);
       })
-      .addCase(createBook.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+      .addCase(deleteBook.fulfilled, (state, action) => {
+        const bookIndex = state.books.findIndex((book) => book.id === action.payload);
+        state.books.splice(bookIndex, 1);
       });
   },
 });
 
 export const selectBooks = (state) => state.books.books;
-
-export const { deleteBook } = booksSlice.actions;
 
 export default booksSlice.reducer;

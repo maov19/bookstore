@@ -1,7 +1,5 @@
 /* eslint-disable */
 
-/* eslint-disable */
-
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBook, deleteBook, fetchBooks, selectBooks } from '../redux/books/booksSlice';
@@ -72,7 +70,7 @@ function CreateBook() {
           onChange={(event) => setAuthor(event.target.value)}
         />
       </div>
-      <div>
+      {/* <div>
         <label htmlFor="category">Category:</label>
         <input
           type="text"
@@ -80,7 +78,7 @@ function CreateBook() {
           value={category}
           onChange={(event) => setCategory(event.target.value)}
         />
-      </div>
+      </div> */}
       <button type="submit">Create Book</button>
     </form>
   );
@@ -89,12 +87,13 @@ function CreateBook() {
 function DeleteBook({ itemId }) {
   const dispatch = useDispatch();
 
-  const handleDelete = () => {
-    dispatch(deleteBook({ itemId }));
+  const handleDeleteBook = () => {
+    dispatch(deleteBook(itemId));
   };
 
-  return <button onClick={handleDelete}>Delete Book</button>;
+  return <button onClick={handleDeleteBook}>Delete Book</button>;
 }
+
 
 export { CreateBook, DeleteBook, DisplayBooks };
 
