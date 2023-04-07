@@ -1,46 +1,104 @@
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  createBook,
+  deleteBook,
+  fetchBooks,
+  selectBooks,
+} from '../redux/books/booksSlice';
 
-import { removeBook } from '../redux/books/booksSlice';
+function DisplayBooks() {
+  const dispatch = useDispatch();
+  const books = useSelector(selectBooks);
 
-/* eslint-disable */
-function Book({ book }) {
+  useEffect(() => {
+    dispatch(fetchBooks());
+  }, [dispatch]);
+
+  if (!Array.isArray(books)) {
+    return null; // or render a loading indicator
+  }
+
   return (
     <div>
-      <li>
-        {book.title}
-        {' '}
-        by
-        {' '}
-        {book.author}
-        <RemoveBookButton bookId={book.item_id} />
-      </li>
+      {books.map((book) => (
+        <div key={book.id}>
+          <h2>{book.title}</h2>
+          <p>{book.author}</p>
+          <p>{book.category}</p>
+          <DeleteBook itemId={book.id} />
+        </div>
+      ))}
     </div>
   );
 }
 
-function RemoveBookButton({ bookId }) {
+function CreateBook() {
   const dispatch = useDispatch();
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [category, setCategory] = useState('');
 
-  const removeBookHandler = () => {
-    dispatch(removeBook(bookId));
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const bookData = {
+      title,
+      author,
+      category,
+      id: Date.now().toString(), // add unique ID
+    };
+    dispatch(createBook(bookData));
+    setTitle('');
+    setAuthor('');
+    setCategory('');
   };
 
-  return <button onClick={removeBookHandler}>Remove Book</button>;
-}
-
-function BookList() {
-  const books = useSelector((state) => state.books);
-
   return (
-    <div>
-      <h1>Book List</h1>
-      <ul>
-        {books.map((book) => (
-          <Book key={book.item_id} book={book} />
-        ))}
-      </ul>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="title">
+          Title:
+          <input
+            id="title"
+            type="text"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="author">
+          Author:
+          <input
+            type="text"
+            id="author"
+            value={author}
+            onChange={(event) => setAuthor(event.target.value)}
+          />
+        </label>
+      </div>
+      <button type="submit">Create Book</button>
+    </form>
   );
 }
 
-export default BookList;
+function DeleteBook({ itemId }) {
+  const dispatch = useDispatch();
+
+  const handleDeleteBook = () => {
+    dispatch(deleteBook(itemId));
+  };
+
+  return (
+    <button onClick={handleDeleteBook} type="button">
+      Delete Book
+    </button>
+  );
+}
+
+DeleteBook.propTypes = {
+  itemId: PropTypes.string.isRequired,
+};
+
+export { CreateBook, DeleteBook, DisplayBooks };
