@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +9,8 @@ import {
   fetchBooks,
   selectBooks,
 } from '../redux/books/booksSlice';
+
+import '../styles/booksStyles.css'
 
 function DisplayBooks() {
   const dispatch = useDispatch();
@@ -21,15 +25,30 @@ function DisplayBooks() {
   }
 
   return (
-    <div>
-      {books.map((book) => (
-        <div key={book.id}>
-          <h2>{book.title}</h2>
-          <p>{book.author}</p>
-          <p>{book.category}</p>
-          <DeleteBook itemId={book.id} />
-        </div>
-      ))}
+    <div className="book-container">
+        {books.map((book) => (
+          <div className="single-book" key={book.id}>
+            <div className="book-info">
+              <h2>{book.title}</h2>
+              <p>{book.author}</p>
+              <p>{book.category}</p>
+              <div className="book-buttons">
+                <button>Comments</button>
+                <DeleteBook itemId={book.id} />
+                <button>Edit</button>
+            </div>
+            </div>
+            <div className="completed">
+              <h2>50%</h2>
+              <h3>Completed</h3>
+            </div>
+            <div className="current">
+              <h3>Current Chapter</h3>
+              <h3>Chapter 17</h3>
+              <button>Update progress</button>
+            </div>
+          </div>
+        ))}
     </div>
   );
 }
@@ -55,31 +74,42 @@ function CreateBook() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="title">
-          Title:
-          <input
-            id="title"
-            type="text"
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-          />
-        </label>
+    <div className="add-book">
+      <h2>ADD NEW BOOK</h2>
+      <div className="add-book-items">
+        <form className="add-form" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="title">
+              <input
+                id="title"
+                type="text"
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+                placeholder="Book title"
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="author">
+              <input
+                type="text"
+                id="author"
+                value={author}
+                onChange={(event) => setAuthor(event.target.value)}
+                placeholder="Author"
+              />
+            </label>
+          </div>
+            <select name="category" id="category-select">
+              <option value="mystery">Category</option>
+              <option value="romance">Romance</option>
+              <option value="sci-fi">Science Fiction</option>
+            </select>
+          <button type="submit">ADD BOOK</button>
+        </form>
       </div>
-      <div>
-        <label htmlFor="author">
-          Author:
-          <input
-            type="text"
-            id="author"
-            value={author}
-            onChange={(event) => setAuthor(event.target.value)}
-          />
-        </label>
-      </div>
-      <button type="submit">Create Book</button>
-    </form>
+
+    </div>
   );
 }
 

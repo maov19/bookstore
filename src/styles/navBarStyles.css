@@ -1,0 +1,33 @@
+.navbar {
+    margin: 2rem 0 2rem 0;
+    display: flex;
+    align-items: center;
+    background-color: white;
+  }
+  
+  .navbar-title {
+    font-size: 2rem;
+    margin: 0 5rem 0 3rem;
+  }
+  
+  .navbar-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-links li {
+    margin-right: 2rem;
+  }
+  
+  .navbar-links li:last-child {
+    margin-right: 0;
+  }
+  
+  .navbar-links a {
+    color: black;
+    text-decoration: none;
+    font-size: 1.2rem;
+  }
+  
