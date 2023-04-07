@@ -1,0 +1,55 @@
+.navbar {
+  margin: 2rem 0 2rem 0;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  position: relative;
+  border-bottom: 1px solid #cccccc81;
+}
+
+.navbar-title {
+  font-size: 2rem;
+  margin: 0 5rem 2rem 3rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+}
+
+.navbar-title a {
+  text-decoration: none;
+  color: #0290ff;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  margin: 0 0 2rem 0;
+  padding: 0;
+  opacity: 0.5;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.5rem;
+  color: #121212;
+  letter-spacing: 1.9px;
+}
+
+.navbar-links li {
+  margin-right: 2rem;
+}
+
+.navbar-links li:last-child {
+  margin-right: 0;
+}
+
+.navbar-links a {
+  color: black;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.navbar img {
+  position: absolute;
+  margin: -1rem 4rem 0 0;
+  top: 0;
+  right: 0;
+  width: 4rem; /* Added this */
+  height: 4rem; /* Added this */
+}
