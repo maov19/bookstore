@@ -1,6 +1,18 @@
+.flex {
+  display: flex;
+}
+
+.montserrat {
+  font-family: "Montserrat", sans-serif;
+}
+
+.reset {
+  margin: 0;
+  padding: 0;
+}
+
 .book-container {
   margin: 0 6rem 0 6rem;
-  display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -10,7 +22,6 @@
   margin: 2rem 2rem 0 0;
   padding: 0;
   border: solid 1px rgba(129, 127, 127, 0.322);
-  display: flex;
   justify-content: space-between;
 }
 
@@ -22,7 +33,6 @@
 
 .book-category {
   margin: 1.5rem 0 0.5rem 0;
-  font-family: "Montserrat", sans-serif;
   font-weight: 700;
   color: rgba(129, 127, 127, 0.856);
 }
@@ -43,7 +53,6 @@
 
 .book-buttons {
   margin: 1.2rem 0 1rem 0;
-  display: flex;
 }
 
 .single-book-button {
@@ -72,10 +81,7 @@
 }
 
 .completed {
-  margin: 0;
-  padding: 0;
   width: 30%;
-  display: flex;
   align-items: center;
 }
 
@@ -87,9 +93,6 @@
 }
 
 .completed-data {
-  margin: 0;
-  padding: 0;
-  display: flex;
   flex-direction: column;
   justify-content: center;
 }
@@ -100,24 +103,17 @@
 }
 
 .percentage {
-  margin: 0;
-  padding: 0;
   font-size: 2.5rem;
-  font-family: Montserrat, sans-serif;
   font-weight: 400;
 }
 
 .completed-status {
-  margin: 0;
-  padding: 0;
   color: rgba(129, 127, 127, 0.479);
   font-size: 0.8rem;
-  font-family: Montserrat, sans-serif;
   font-weight: 400;
 }
 
 .current {
-  display: flex;
   flex-direction: column;
   width: 25%;
   margin: 0 2rem 0 0;
@@ -171,7 +167,6 @@
 .add-book h2 {
   margin: 2rem 0 2rem 0;
   color: rgba(129, 127, 127, 0.856);
-  font-family: Montserrat, sans-serif;
 }
 
 .add-book input,
@@ -191,7 +186,6 @@ input::placeholder {
 }
 
 .add-form {
-  display: flex;
   justify-content: space-between;
 }
 

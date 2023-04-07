@@ -24,28 +24,28 @@ function DisplayBooks() {
   }
 
   return (
-    <div className="book-container">
+    <div className="book-container flex">
       {books.map((book) => (
-        <div className="single-book" key={book.id}>
+        <div className="single-book flex" key={book.id}>
           <div className="book-info">
-            <p className="book-category">Action</p>
+            <p className="book-category montserrat">Action</p>
             <h2 className="book-title">{book.title}</h2>
             <p className="book-author">John Williams</p>
-            <div className="book-buttons">
+            <div className="book-buttons flex">
               <button type="button" className="single-book-button">Comments</button>
               <DeleteBook className="single-book-button" itemId={book.id} />
               <button type="button" className="single-book-button">Edit</button>
             </div>
           </div>
-          <div className="completed">
+          <div className="completed flex reset">
             <img src={progress} alt="completion" />
-            <div className="completed-data">
-              <h2 className="percentage">75%</h2>
-              <h3 className="completed-status">Completed</h3>
+            <div className="completed-data flex reset">
+              <h2 className="percentage montserrat reset">75%</h2>
+              <h3 className="completed-status montserrat reset">Completed</h3>
             </div>
             <div className="separator" />
           </div>
-          <div className="current">
+          <div className="current flex">
             <h3 className="current-title">CURRENT CHAPTER</h3>
             <h3 className="current-chapter">Chapter 17</h3>
             <button type="button" className="current-button">UPDATE PROGRESS</button>
@@ -79,9 +79,9 @@ function CreateBook() {
   return (
     <div className="add-book">
       <hr width="100%" />
-      <h2>ADD NEW BOOK</h2>
+      <h2 className="montserrat">ADD NEW BOOK</h2>
       <div className="add-book-items">
-        <form className="add-form" onSubmit={handleSubmit}>
+        <form className="add-form flex" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="title">
               <input
@@ -93,17 +93,6 @@ function CreateBook() {
               />
             </label>
           </div>
-          {/* <div>
-            <label htmlFor="author">
-              <input
-                type="text"
-                id="author"
-                value={author}
-                onChange={(event) => setAuthor(event.target.value)}
-                placeholder="Author"
-              />
-            </label>
-          </div> */}
           <select name="category" id="category-select">
             <option value="mystery">Category</option>
             <option value="romance">Romance</option>
